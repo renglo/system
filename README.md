@@ -62,11 +62,25 @@ OPENAI_API_KEY = 'your_api_key'
 
 ## Running the System
 
+
 ### Local Development
 
+Copy run.sh.TEMPLATE to run.sh
 ```bash
-# Option 1: Using main.py
-python main.py
+cp run.sh.TEMPLATE run.sh
+```
+
+Fill the PROFILE and REGION env variables in run.sh with your own values
+```bash
+export AWS_PROFILE=<PROFILE>
+export AWS_DEFAULT_REGION=<REGION>
+
+```
+
+
+```bash
+# Option 1: Using the runner
+source run.sh
 
 # Option 2: Using Flask CLI
 export FLASK_APP=wsgi:app
