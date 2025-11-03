@@ -21,13 +21,20 @@ Dependencies:
 
 ## Setup
 
+### 0. Bootstrap your dev environment
+```bash
+git clone https://github.com/renglo/tank-api.git   
+git clone https://github.com/renglo/tank-lib.git
+git clone https://github.com/renglo/[YOUR_SYSTEM]-sys.git # Use your system specific repository here
+```
+
 ### 1. Install Dependencies
 
 ```bash
-cd example-sys
+cd [YOUR_SYSTEM]-sys
 
 # Create virtual environment
-python -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install tank libraries from local paths (for development)
