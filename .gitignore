@@ -49,5 +49,6 @@ deployment/
 lambda-deployment.zip
 
 # Config
+run.sh
 env_config.py
 

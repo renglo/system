@@ -38,11 +38,11 @@ python3.12 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install tank libraries from local paths (for development)
-pip install -e ../modules/tank-lib
-pip install -e ../modules/tank-api
+pip install -e ../sys-modules-local/tank-lib
+pip install -e ../sys-modules-local/tank-api
 
 # (Optional) Install extension modules
-pip install -e ../modules/{OTHER}-mod
+pip install -e ../sys-modules-local/{OTHER}-mod
 
 # Install system dependencies
 pip install -r requirements.txt
