@@ -21,13 +21,20 @@ Dependencies:
 
 ## Setup
 
+### 0. Bootstrap your dev environment
+```bash
+git clone https://github.com/renglo/tank-api.git   
+git clone https://github.com/renglo/tank-lib.git
+git clone https://github.com/renglo/[YOUR_SYSTEM]-sys.git # Use your system specific repository here
+```
+
 ### 1. Install Dependencies
 
 ```bash
-cd example-sys
+cd [YOUR_SYSTEM]-sys
 
 # Create virtual environment
-python -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install tank libraries from local paths (for development)
@@ -55,11 +62,25 @@ OPENAI_API_KEY = 'your_api_key'
 
 ## Running the System
 
+
 ### Local Development
 
+Copy run.sh.TEMPLATE to run.sh
 ```bash
-# Option 1: Using main.py
-python main.py
+cp run.sh.TEMPLATE run.sh
+```
+
+Fill the PROFILE and REGION env variables in run.sh with your own values
+```bash
+export AWS_PROFILE=<PROFILE>
+export AWS_DEFAULT_REGION=<REGION>
+
+```
+
+
+```bash
+# Option 1: Using the runner
+source run.sh
 
 # Option 2: Using Flask CLI
 export FLASK_APP=wsgi:app
