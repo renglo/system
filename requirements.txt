@@ -8,8 +8,6 @@
 #   pip install -e ../some-mod  # Custom handlers package
 
 # Production WSGI server
-gunicorn==23.0.0
+# gunicorn==23.0.0
 
-# Optional: Additional production dependencies
-python-dotenv==1.0.0  # For loading .env files if needed
 
