@@ -5,7 +5,6 @@
 # For local development:
 #   pip install -e ../tank-lib
 #   pip install -e ../tank-api
-#   pip install -e ../some-mod  # Custom handlers package
 
 # Production WSGI server
 # gunicorn==23.0.0
