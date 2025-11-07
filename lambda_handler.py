@@ -1,12 +1,12 @@
 """
 AWS Lambda Handler Example
 
-This demonstrates how to use tank-api and tank-lib in AWS Lambda.
+This demonstrates how to use renglo-api and renglo-lib in AWS Lambda.
 Config can come from environment variables or a deployed env_config.py file.
 """
 
-from tank_api import create_app
-from tank_api.config import get_config_for_lambda
+from renglo_api import create_app
+from renglo_api.config import get_config_for_lambda
 import json
 
 # Create app instance at module level for Lambda reuse
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
             # This is a simplified example
             
             # Your business logic here
-            # You can access tank-lib controllers via tank-api routes
+            # You can access renglo-lib controllers via renglo-api routes
             
             return {
                 'statusCode': 200,

@@ -8,12 +8,12 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy tank libraries
-COPY ../tank-lib /tmp/tank-lib
-COPY ../tank-api /tmp/tank-api
+# Copy renglo libraries
+COPY ../renglo-lib /tmp/renglo-lib
+COPY ../renglo-api /tmp/renglo-api
 
 # Install Python dependencies
-RUN pip install --no-cache-dir /tmp/tank-lib /tmp/tank-api
+RUN pip install --no-cache-dir /tmp/renglo-lib /tmp/renglo-api
 
 # Copy application code
 COPY requirements.txt .

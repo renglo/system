@@ -1,13 +1,14 @@
 """
-WSGI Entry Point for Production
+Application Entry Point for Production
 
-Use this with production WSGI servers like Gunicorn or uWSGI.
+Use this with production WSGI servers like Gunicorn, uWSGI, or Zappa.
 
 Example usage:
-    gunicorn wsgi:app -w 4 -b 0.0.0.0:8000
+    gunicorn application:app -w 4 -b 0.0.0.0:8000
+    zappa deploy noma_1007a  # Uses application.app
 """
 
-from tank_api import create_app
+from renglo_api import create_app
 
 # Create application instance
 # Config will be loaded from env_config.py in this directory

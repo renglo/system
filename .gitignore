@@ -48,7 +48,15 @@ deployment/
 *.zip
 lambda-deployment.zip
 
+# Zappa deployment script artifacts
+.wheelhouse/
+.venv_deploy/
+.freeze.txt
+requirements.lock
+requirements.in
+
 # Config
 run.sh
 env_config.py
+zappa_settings.json
 

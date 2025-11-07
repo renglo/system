@@ -1,25 +1,6 @@
 #!/usr/bin/env python3
-"""
-Example Application using tank-api and tank-lib
 
-This demonstrates the proper architecture where:
-- Configuration lives at the application level (this directory)
-- tank-api and tank-lib are used as pure libraries
-- Config is injected at runtime
-
-Usage:
-    python main.py
-    
-    # With AWS profile
-    AWS_PROFILE=maker python main.py
-    
-    # Or set environment variables
-    export AWS_PROFILE=maker
-    export AWS_DEFAULT_REGION=us-east-1
-    python main.py
-"""
-
-from tank_api import create_app
+from renglo_api import create_app
 import logging
 import os
 import sys
@@ -104,7 +85,7 @@ def main():
     """
     
     logger.info("=" * 60)
-    logger.info("Starting Tank Application")
+    logger.info("Starting Renglo System")
     logger.info("=" * 60)
     
     # Setup AWS credentials and region
@@ -114,7 +95,7 @@ def main():
     logger.info("-" * 60)
     
     # Option 1: Load from env_config.py in current directory
-    # The env_config.py file is in this application directory, not in tank-api
+    # The env_config.py file is in this application directory, not in renglo-api
     app = create_app()
     
     # Option 2: Pass config directly (uncomment to use)

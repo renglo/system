@@ -2,13 +2,13 @@
 """
 Test script to verify the application is configured correctly.
 
-Run this to check that tank-lib and tank-api are working properly
+Run this to check that renglo-lib and renglo-api are working properly
 with your configuration.
 """
 
 import sys
-from tank_api import create_app
-from tank_api.config import load_env_config
+from renglo_api import create_app
+from renglo_api.config import load_env_config
 
 
 def test_configuration():
@@ -111,9 +111,9 @@ def test_controllers():
     print("=" * 60)
     
     try:
-        from tank.app_chat.chat_controller import ChatController
-        from tank.app_data.data_controller import DataController
-        from tank.app_auth.auth_controller import AuthController
+        from renglo.chat.chat_controller import ChatController
+        from renglo.data.data_controller import DataController
+        from renglo.auth.auth_controller import AuthController
         
         config = load_env_config()
         
