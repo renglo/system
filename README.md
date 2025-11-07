@@ -161,16 +161,26 @@ Place .env.development and .env.production in the /console folder
 
 Copy run.sh.TEMPLATE to run.sh
 ```bash
+# Copy the run script template
 cp run.sh.TEMPLATE run.sh
+
+# Edit with your AWS profile and region
+nano run.sh
 ```
 
-Fill the PROFILE and REGION env variables in run.sh with your own values
+Example `run.sh`:
+
 ```bash
-export AWS_PROFILE=<PROFILE>
-export AWS_DEFAULT_REGION=<REGION>
+#!/bin/bash
+export AWS_PROFILE=my-profile
+export AWS_DEFAULT_REGION=us-east-1
 
+python main.py
 ```
 
+## Running the System
+
+### Local Development
 
 
 Step 4. Setup the System Logo
@@ -327,15 +337,19 @@ The application supports three ways to load configuration:
 
 ### 1. From env_config.py (Development)
 ```python
+# wsgi.py or main.py
 app = create_app()  # Loads from ./env_config.py
 ```
 
 ### 2. Pass Config Dict (Production)
 ```python
+import os
+from tank_api import create_app
+
 config = {
-    'DYNAMODB_CHAT_TABLE': 'prod_chat',
+    'DYNAMODB_CHAT_TABLE': os.getenv('DYNAMODB_CHAT_TABLE'),
     'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY'),
-    # ...
+    # ... other config
 }
 app = create_app(config=config)
 ```
@@ -376,7 +390,7 @@ The system offers a lot of out of the box functionality:
 - `/_chat/*` - Chat functionality
 - `/_blueprint/*` - Blueprint management
 - `/_docs/*` - Document management
-- `/_schd/*` - Scheduler endpoints
+- `/_schd/*` - Scheduler endpoints (calls extension handlers)
 - `/_state/*` - State management
 - `/ping` - Health check
 - `/time` - Current time (authenticated)
