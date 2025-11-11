@@ -106,10 +106,11 @@ cd <NAME-OF-PROJECT>
 ```
 
 Step 1. 
-
-Clone the system and the console. Install its dependencies
+Create a folder called dev and clone the system and the console in it. Install its dependencies
 
 ```
+mkdir dev
+cd dev
 git clone https://github.com/renglo/system.git
 git clone https://github.com/renglo/console.git
 
