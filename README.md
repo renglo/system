@@ -226,7 +226,7 @@ pip install -e extensions/some-extension/package
 Install the extension ui for the console
 ```
 # Open the console config files (.env.development and .env.production) 
-# Add the name of the extension to VITE_BOOTSTRAP_PLUGINS (it is a comma separated string)
+# Add the name of the extension to VITE_BOOTSTRAP_EXTENSIONS (it is a comma separated string)
 
 ```
 
