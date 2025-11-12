@@ -4,6 +4,7 @@
 
 ## Architecture (Multiple repositories)
 
+```
 Root
 │
 ├── system/                     ← Core System (not to be edited)
@@ -70,8 +71,9 @@ Root
        │   ├── app_schd/       ← Scheduler subsystem
        │   └── app_state/      ← State subsystem
        └── setup.py
+```
 
-
+```
 Dependencies Flow:
 ┌─────────────────────────────────────────────────────────────────┐
 │ system/ (Backend)                                               │
@@ -85,7 +87,7 @@ Dependencies Flow:
 │   └── dynamically loads: @extensions/*/ui/*                     │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
-
+```
 
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -106,7 +108,7 @@ cd <NAME-OF-PROJECT>
 ```
 
 Step 1. 
-Create a folder called dev and clone the system and the console in it. Install its dependencies
+Clone the System and the Console in it. Install its dependencies
 
 ```
 git clone https://github.com/renglo/system.git
