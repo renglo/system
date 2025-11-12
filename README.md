@@ -90,9 +90,7 @@ Dependencies Flow:
 ```
 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-INSTALLATION
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## INSTALLATION
 
 Setting up a new development environment
 
@@ -196,9 +194,8 @@ Place both images in console/public
 
 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-EXTENSIONS
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## EXTENSIONS
+
 Up to this point you have the bare bones version of the system.
 If you want to use, edit and view the specialized extensions, you need to install them.
 
@@ -254,9 +251,7 @@ Notes:
 
 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-RUNNING THE SYSTEM
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## RUNNING THE SYSTEM
 
 
 
@@ -276,9 +271,7 @@ npm run dev
 
 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-AVAILABLE SYSTEM ROUTES
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## AVAILABLE SYSTEM ROUTES
 
 The system offers a lot of out of the box functionality:
 
