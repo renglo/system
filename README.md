@@ -237,7 +237,7 @@ pip install -e extensions/some-extension/package
 (Optional) if you want to show the extension in the 'account_settings' section to be installed by the user do the following.
 ```
 # Open the console config files (.env.development and .env.production) 
-# Add the name of the extension to VITE_BOOTSTRAP_EXTENSIONS (it is a comma separated string)
+# Add the name of the extension to VITE_EXTENSIONS (it is a comma separated string)
 
 ```
 

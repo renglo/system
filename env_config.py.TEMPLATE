@@ -1,14 +1,14 @@
 WL_NAME='x'
 
-TANK_BASE_URL = 'x'
-TANK_FE_BASE_URL = 'x'
-TANK_DOC_BASE_URL = 'x'
-TANK_AWS_REGION = 'x'
+BASE_URL = 'x'
+FE_BASE_URL = 'x'
+DOC_BASE_URL = 'x'
+AWS_REGION = 'x'
 
 #Crontab/Cronjob
-TANK_API_GATEWAY_ARN = 'x'
-TANK_ROLE_ARN = 'x'
-TANK_ENV = 'x'
+API_GATEWAY_ARN = 'x'
+ROLE_ARN = 'x'
+SYS_ENV = 'x'
 
 
 # DynamoDB

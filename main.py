@@ -61,8 +61,8 @@ def setup_aws_region():
     if not aws_region:
         # Try to get from config
         try:
-            from env_config import TANK_AWS_REGION
-            aws_region = TANK_AWS_REGION
+            from env_config import AWS_REGION
+            aws_region = AWS_REGION
             os.environ['AWS_DEFAULT_REGION'] = aws_region
             logger.info(f"✓ AWS Region set from config: {aws_region}")
         except (ImportError, AttributeError):

@@ -28,7 +28,7 @@ def test_configuration():
         'COGNITO_REGION',
         'COGNITO_USERPOOL_ID',
         'OPENAI_API_KEY',
-        'TANK_BASE_URL'
+        'BASE_URL'
     ]
     
     missing = []

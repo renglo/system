@@ -232,7 +232,7 @@ All config uses **UPPERCASE** names:
 ```python
 env_var_keys = [
     'WL_NAME',
-    'TANK_BASE_URL',
+    'BASE_URL',
     'DYNAMODB_ENTITY_TABLE',
     'DYNAMODB_RINGDATA_TABLE',
     'DYNAMODB_CHAT_TABLE',
@@ -266,14 +266,14 @@ python main.py
             "DYNAMODB_RINGDATA_TABLE": "noma_data",
             "DYNAMODB_ENTITY_TABLE": "noma_entities",
             "OPENAI_API_KEY": "sk-production-key",
-            "TANK_ENV": "production"
+            "SYS_ENV": "production"
         }
     },
     "staging": {
         "extends": "production",
         "environment_variables": {
             "DYNAMODB_RINGDATA_TABLE": "noma_staging_data",
-            "TANK_ENV": "staging"
+            "SYS_ENV": "staging"
         }
     }
 }
