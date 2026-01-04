@@ -4,14 +4,4 @@
 # Option 1: Install from local directories (current structure)
 ../dev/renglo-lib
 ../dev/renglo-api
-../extensions/noma/package
-../extensions/enerclave/package
-../extensions/scheduler/package
-
-# Option 2: If these are on GitHub, use git URLs instead:
-# git+https://github.com/your-org/renglo-lib.git@main#egg=renglo-lib
-# git+https://github.com/your-org/renglo-api.git@main#egg=renglo-api
-# git+https://github.com/your-org/noma-mod.git@main#egg=noma-mod
-
-# All other dependencies are specified in the setup.py files above
-# and will be installed automatically by pip
+../extensions/exhq/package
