@@ -293,10 +293,20 @@ echo "    Pip: $(pip --version)"
 echo "    Zappa: $(zappa --version 2>/dev/null || echo 'installed')"
 echo "    Total packages: $(pip list | tail -n +3 | wc -l | tr -d ' ')"
 
-# Step 12: Deploy with Zappa
+# Step 12: Temporarily move wheelhouse out of the way before Zappa packages
+echo ""
+echo "==> Step 12: Preparing for Zappa packaging"
+WHEELHOUSE_TMP=""
+if [[ -d "$WHEELHOUSE" ]]; then
+  WHEELHOUSE_TMP=$(mktemp -d)
+  echo "    Temporarily moving wheelhouse out of packaging directory..."
+  mv "$WHEELHOUSE" "$WHEELHOUSE_TMP/wheelhouse"
+fi
+
+# Step 13: Deploy with Zappa
 echo ""
 echo "=========================================="
-echo "==> Step 12: Running Zappa $ACTION $STAGE"
+echo "==> Step 13: Running Zappa $ACTION $STAGE"
 echo "=========================================="
 echo ""
 
@@ -304,6 +314,14 @@ if [[ "$ACTION" == "deploy" ]]; then
   zappa deploy "$STAGE"
 else
   zappa update "$STAGE"
+fi
+
+# Restore wheelhouse after packaging (before cleanup)
+if [[ -n "$WHEELHOUSE_TMP" && -d "$WHEELHOUSE_TMP/wheelhouse" ]]; then
+  echo ""
+  echo "==> Restoring wheelhouse..."
+  mv "$WHEELHOUSE_TMP/wheelhouse" "$WHEELHOUSE"
+  rmdir "$WHEELHOUSE_TMP" 2>/dev/null || true
 fi
 
 echo ""

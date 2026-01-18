@@ -11,7 +11,6 @@ Root
 │   ├── env_config.py           ← System configuration
 │   ├── main.py                 ← Application Point of Entry
 │   ├── wsgi.py                 ← Production WSGI entry point
-│   ├── lambda_handler.py       ← AWS Lambda handler
 │   ├── requirements.txt        ← System dependencies
 │   └── README.md
 │
@@ -210,11 +209,20 @@ mkdir extensions
 cd extensions
 ```
 
-Clone schd and data extensions
+Clone the system extensions  (schd, data, pes) 
 
 ```
 git clone https://github.com/renglo/schd.git
 git clone https://github.com/renglo/data.git
+git clone https://github.com/renglo/pes.git
+```
+
+Install the system extensions
+```
+cd extensions
+pip install -e schd/package
+pip install -e pes/package
+
 ```
 
 
