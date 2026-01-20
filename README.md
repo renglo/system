@@ -228,21 +228,18 @@ pip install -e pes/package
 
 Step 5b.
 
-Installing custom extensions
+Installing custom extensions UI
 
-
-Clone the extension code
+Clone the extension code (in /extensions)
 ```
 git clone https://some-url-where-repository-is-hosted/some-extension.git
 ```
 
-Install the extension handlers
-```
-pip install -e extensions/some-extension/package
+Installing the handlers
 
-```
+If you want to install the handlers, consult /extensions/<extension_name>/service/README.md
 
-(Optional) if you want to show the extension in the 'account_settings' section to be installed by the user do the following.
+(Optional) if you want to give the user the option to install the extension in their portfolio (in the 'account_settings' section) do the following.
 ```
 # Open the console config files (.env.development and .env.production) 
 # Add the name of the extension to VITE_EXTENSIONS (it is a comma separated string)
