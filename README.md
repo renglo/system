@@ -225,6 +225,15 @@ pip install -e pes/package
 
 ```
 
+Install the extension blueprints
+
+# if you are in extensions/
+python schd/installer/upload_blueprints.py <env> --aws-profile <profile> --aws-region <region>
+python pes/installer/upload_blueprints.py <env> --aws-profile <profile> --aws-region <region>
+
+#python schd/installer/upload_blueprints.py renglo --aws-profile maker  --aws-region us-east-1
+#python pes/installer/upload_blueprints.py renglo --aws-profile maker --aws-region us-east-1
+
 
 Step 5b.
 
