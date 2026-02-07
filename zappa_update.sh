@@ -4,9 +4,9 @@ set -euo pipefail
 # Zappa Deployment Script (Simplified)
 # 
 # Usage:
-#   ./zappa_deploy.sh <stage> [update|deploy] [--clean]
-#   ./zappa_deploy.sh exhq_1229a update
-#   ./zappa_deploy.sh exhq_1229a update --clean  # Force clean wheelhouse
+#   ./zappa_update.sh <stage> [update|deploy] [--clean]
+#   ./zappa_update.sh exhq_1229a update
+#   ./zappa_update.sh exhq_1229a update --clean  # Force clean wheelhouse
 #
 # What it does:
 # 1. Captures your EXACT current environment (pip freeze)
