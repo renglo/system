@@ -11,7 +11,6 @@ Root
 │   ├── env_config.py           ← System configuration
 │   ├── main.py                 ← Application Point of Entry
 │   ├── wsgi.py                 ← Production WSGI entry point
-│   ├── lambda_handler.py       ← AWS Lambda handler
 │   ├── requirements.txt        ← System dependencies
 │   └── README.md
 │
@@ -210,31 +209,46 @@ mkdir extensions
 cd extensions
 ```
 
-Clone schd and data extensions
+Clone the system extensions  (schd, data, pes) 
 
 ```
 git clone https://github.com/renglo/schd.git
 git clone https://github.com/renglo/data.git
+git clone https://github.com/renglo/pes.git
 ```
+
+Install the system extensions
+```
+cd extensions
+pip install -e schd/package
+pip install -e pes/package
+
+```
+
+Install the extension blueprints
+
+# if you are in extensions/
+python schd/installer/upload_blueprints.py <env> --aws-profile <profile> --aws-region <region>
+python pes/installer/upload_blueprints.py <env> --aws-profile <profile> --aws-region <region>
+
+#python schd/installer/upload_blueprints.py renglo --aws-profile maker  --aws-region us-east-1
+#python pes/installer/upload_blueprints.py renglo --aws-profile maker --aws-region us-east-1
 
 
 Step 5b.
 
-Installing custom extensions
+Installing custom extensions UI
 
-
-Clone the extension code
+Clone the extension code (in /extensions)
 ```
 git clone https://some-url-where-repository-is-hosted/some-extension.git
 ```
 
-Install the extension handlers
-```
-pip install -e extensions/some-extension/package
+Installing the handlers
 
-```
+If you want to install the handlers, consult /extensions/<extension_name>/service/README.md
 
-(Optional) if you want to show the extension in the 'account_settings' section to be installed by the user do the following.
+(Optional) if you want to give the user the option to install the extension in their portfolio (in the 'account_settings' section) do the following.
 ```
 # Open the console config files (.env.development and .env.production) 
 # Add the name of the extension to VITE_EXTENSIONS (it is a comma separated string)
