@@ -4,9 +4,9 @@ set -euo pipefail
 # Zappa Deployment Script (Simplified)
 # 
 # Usage:
-#   ./zappa_deploy.sh <stage> [update|deploy] [--clean]
-#   ./zappa_deploy.sh noma_1007a update
-#   ./zappa_deploy.sh noma_1007a update --clean  # Force clean wheelhouse
+#   ./zappa_update.sh <stage> [update|deploy] [--clean]
+#   ./zappa_update.sh renglo_0206 update
+#   ./zappa_update.sh renglo_0206 update --clean  # Force clean wheelhouse
 #
 # What it does:
 # 1. Captures your EXACT current environment (pip freeze)
@@ -20,7 +20,16 @@ set -euo pipefail
 # - Wheelhouse is kept between deploys (faster subsequent deploys)
 # - Use --clean flag to force fresh download
 
-STAGE="${1:-noma_1007a}"
+# Validate required arguments
+if [[ -z "${1:-}" ]]; then
+  echo "ERROR: Stage name is required" >&2
+  echo "" >&2
+  echo "Usage: $0 <stage> [update|deploy] [--clean]" >&2
+  echo "  <stage> - REQUIRED: Zappa stage name (must match a key in zappa_settings.json)" >&2
+  exit 1
+fi
+
+STAGE="$1"
 ACTION="${2:-update}"  # "deploy" for first-time; "update" otherwise
 CLEAN_BUILD=false
 
@@ -280,10 +289,20 @@ echo "    Pip: $(pip --version)"
 echo "    Zappa: $(zappa --version 2>/dev/null || echo 'installed')"
 echo "    Total packages: $(pip list | tail -n +3 | wc -l | tr -d ' ')"
 
-# Step 12: Deploy with Zappa
+# Step 12: Temporarily move wheelhouse out of the way before Zappa packages
+echo ""
+echo "==> Step 12: Preparing for Zappa packaging"
+WHEELHOUSE_TMP=""
+if [[ -d "$WHEELHOUSE" ]]; then
+  WHEELHOUSE_TMP=$(mktemp -d)
+  echo "    Temporarily moving wheelhouse out of packaging directory..."
+  mv "$WHEELHOUSE" "$WHEELHOUSE_TMP/wheelhouse"
+fi
+
+# Step 13: Deploy with Zappa
 echo ""
 echo "=========================================="
-echo "==> Step 12: Running Zappa $ACTION $STAGE"
+echo "==> Step 13: Running Zappa $ACTION $STAGE"
 echo "=========================================="
 echo ""
 
@@ -291,6 +310,14 @@ if [[ "$ACTION" == "deploy" ]]; then
   zappa deploy "$STAGE"
 else
   zappa update "$STAGE"
+fi
+
+# Restore wheelhouse after packaging (before cleanup)
+if [[ -n "$WHEELHOUSE_TMP" && -d "$WHEELHOUSE_TMP/wheelhouse" ]]; then
+  echo ""
+  echo "==> Restoring wheelhouse..."
+  mv "$WHEELHOUSE_TMP/wheelhouse" "$WHEELHOUSE"
+  rmdir "$WHEELHOUSE_TMP" 2>/dev/null || true
 fi
 
 echo ""
