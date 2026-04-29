@@ -89,5 +89,5 @@ class BackendLambdaStack(Stack):
 
         CfnOutput(self, f"BackendFunctionName{stage_name}", value=backend_fn.function_name)
         CfnOutput(self, f"BackendVersionArn{stage_name}", value=version.function_arn)
-        CfnOutput(self, f"BackendAliasArn{stage_name}", value=alias.alias_arn)
+        CfnOutput(self, f"BackendAliasArn{stage_name}", value=alias.function_arn)
         CfnOutput(self, f"BackendRestApiUrl{stage_name}", value=rest_api.url)
