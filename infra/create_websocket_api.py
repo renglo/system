@@ -3,6 +3,7 @@ import argparse
 import os
 import configparser
 import json
+import sys
 from typing import Dict, Optional
 
 
@@ -32,6 +33,10 @@ python tank/installer/create_websocket_api.py <api_name> "<route>" "<endpoint>" 
 
 
 '''
+
+def log(message: str) -> None:
+    """Write human-readable logs to stderr to keep stdout machine-readable."""
+    print(message, file=sys.stderr)
 
 def get_available_aws_profiles():
     """Retrieve available AWS profiles from ~/.aws/credentials and ~/.aws/config."""
@@ -64,7 +69,7 @@ def api_exists(apigw, api_name: str) -> str:
                 return api['ApiId']
         return ""
     except Exception as e:
-        print(f"Error checking API existence: {e}")
+        log(f"Error checking API existence: {e}")
         return ""
 
 def find_route(apigw, api_id: str, route_key: str) -> Optional[Dict]:
@@ -75,7 +80,7 @@ def find_route(apigw, api_id: str, route_key: str) -> Optional[Dict]:
             if route.get("RouteKey") == route_key:
                 return route
     except Exception as e:
-        print(f"Error finding route '{route_key}': {e}")
+        log(f"Error finding route '{route_key}': {e}")
     return None
 
 def find_stage(apigw, api_id: str, stage_name: str) -> Optional[Dict]:
@@ -86,7 +91,7 @@ def find_stage(apigw, api_id: str, stage_name: str) -> Optional[Dict]:
             if stage.get("StageName") == stage_name:
                 return stage
     except Exception as e:
-        print(f"Error finding stage '{stage_name}': {e}")
+        log(f"Error finding stage '{stage_name}': {e}")
     return None
 
 def create_or_replace_integration(apigw, api_id: str, route_key: str, integration_uri: str, old_integration_id: Optional[str] = None) -> Dict:
@@ -121,7 +126,7 @@ def upsert_route_with_integration(apigw, api_id: str, route_key: str, integratio
 
 def create_websocket_api(apigw, api_name: str, route_selection_expr: str) -> Dict:
     """Create a WebSocket API."""
-    print(f"🛠️  Creating WebSocket API: {api_name}...")
+    log(f"🛠️  Creating WebSocket API: {api_name}...")
     
     try:
         response = apigw.create_api(
@@ -129,30 +134,30 @@ def create_websocket_api(apigw, api_name: str, route_selection_expr: str) -> Dic
             ProtocolType='WEBSOCKET',
             RouteSelectionExpression=route_selection_expr
         )
-        print(f"✅ WebSocket API '{api_name}' created successfully.")
+        log(f"✅ WebSocket API '{api_name}' created successfully.")
         return response
     except Exception as e:
-        print(f"❌ Error creating WebSocket API: {e}")
+        log(f"❌ Error creating WebSocket API: {e}")
         raise
 
 def create_route(apigw, api_id: str, route_key: str) -> Dict:
     """Create a route for the WebSocket API."""
-    print(f"🛠️  Creating route: {route_key}...")
+    log(f"🛠️  Creating route: {route_key}...")
     
     try:
         response = apigw.create_route(
             ApiId=api_id,
             RouteKey=route_key
         )
-        print(f"✅ Route '{route_key}' created successfully.")
+        log(f"✅ Route '{route_key}' created successfully.")
         return response
     except Exception as e:
-        print(f"❌ Error creating route: {e}")
+        log(f"❌ Error creating route: {e}")
         raise
 
 def update_route(apigw, api_id: str, route_id: str, route_key: str, integration_id: str) -> Dict:
     """Update a route to point to an integration."""
-    print(f"🛠️  Updating route target for: {route_key}...")
+    log(f"🛠️  Updating route target for: {route_key}...")
     
     try:
         response = apigw.update_route(
@@ -161,15 +166,15 @@ def update_route(apigw, api_id: str, route_id: str, route_key: str, integration_
             RouteKey=route_key,
             Target=f'integrations/{integration_id}'
         )
-        print(f"✅ Route target updated successfully.")
+        log(f"✅ Route target updated successfully.")
         return response
     except Exception as e:
-        print(f"❌ Error updating route target: {e}")
+        log(f"❌ Error updating route target: {e}")
         raise
 
 def create_integration(apigw, api_id: str, route_key: str, integration_uri: str) -> Dict:
     """Create an HTTP integration for the WebSocket API."""
-    print(f"🛠️  Creating integration for route: {route_key}...")
+    log(f"🛠️  Creating integration for route: {route_key}...")
     
     try:
         # Remove @ symbol if present at the start of the integration URI
@@ -197,15 +202,15 @@ def create_integration(apigw, api_id: str, route_key: str, integration_uri: str)
                 'application/json': request_template
             }
         )
-        print(f"✅ Integration for route '{route_key}' created successfully.")
+        log(f"✅ Integration for route '{route_key}' created successfully.")
         return response
     except Exception as e:
-        print(f"❌ Error creating integration: {e}")
+        log(f"❌ Error creating integration: {e}")
         raise
 
 def create_stage(apigw, api_id: str, stage_name: str) -> Dict:
     """Create a stage for the WebSocket API."""
-    print(f"🛠️  Creating stage: {stage_name}...")
+    log(f"🛠️  Creating stage: {stage_name}...")
     
     try:
         response = apigw.create_stage(
@@ -213,17 +218,17 @@ def create_stage(apigw, api_id: str, stage_name: str) -> Dict:
             StageName=stage_name,
             AutoDeploy=True
         )
-        print(f"✅ Stage '{stage_name}' created successfully.")
+        log(f"✅ Stage '{stage_name}' created successfully.")
         return response
     except Exception as e:
-        print(f"❌ Error creating stage: {e}")
+        log(f"❌ Error creating stage: {e}")
         raise
 
 def ensure_stage(apigw, api_id: str, stage_name: str) -> Dict:
     """Create stage if missing; otherwise keep existing stage."""
     existing_stage = find_stage(apigw, api_id, stage_name)
     if existing_stage:
-        print(f"✅ Stage '{stage_name}' already exists.")
+        log(f"✅ Stage '{stage_name}' already exists.")
         return existing_stage
     return create_stage(apigw, api_id, stage_name)
 
@@ -232,12 +237,12 @@ def create_default_routes(apigw, api_id: str, integration_target: str) -> None:
     default_routes = ['$connect', '$disconnect']
     
     for route_key in default_routes:
-        print(f"🛠️  Creating default route: {route_key}...")
+        log(f"🛠️  Creating default route: {route_key}...")
         try:
             upsert_route_with_integration(apigw, api_id, route_key, integration_target)
-            print(f"✅ Default route '{route_key}' created successfully.")
+            log(f"✅ Default route '{route_key}' created successfully.")
         except Exception as e:
-            print(f"❌ Error creating default route {route_key}: {e}")
+            log(f"❌ Error creating default route {route_key}: {e}")
             raise
 
 def run(environment: str, route: str, integration_target: str, stage_name: str, 
@@ -247,10 +252,10 @@ def run(environment: str, route: str, integration_target: str, stage_name: str,
     # In CI, credentials are usually injected via environment (OIDC).
     if aws_profile:
         boto3.setup_default_session(profile_name=aws_profile, region_name=region)
-        print(f"🔄 Using AWS Profile: {aws_profile} in region {region}")
+        log(f"🔄 Using AWS Profile: {aws_profile} in region {region}")
     else:
         boto3.setup_default_session(region_name=region)
-        print(f"🔄 Using environment credentials in region {region}")
+        log(f"🔄 Using environment credentials in region {region}")
     apigw = boto3.client('apigatewayv2', region_name=region)
 
     api_name = environment
@@ -259,7 +264,7 @@ def run(environment: str, route: str, integration_target: str, stage_name: str,
     # Check if API already exists
     existing_api_id = api_exists(apigw, api_name)
     if existing_api_id:
-        print(f"✅ WebSocket API '{api_name}' already exists with ID: {existing_api_id}")
+        log(f"✅ WebSocket API '{api_name}' already exists with ID: {existing_api_id}")
         api = apigw.get_api(ApiId=existing_api_id)
         api_id = existing_api_id
     else:
