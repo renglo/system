@@ -28,26 +28,35 @@ class BackendLambdaStack(Stack):
         websocket_url = self.node.try_get_context("websocket_url") or ""
         websocket_connections = self.node.try_get_context("websocket_connections") or ""
 
-        role = iam.Role(
-            self,
-            f"BackendLambdaRole{stage_name}",
-            assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
-            managed_policies=[
-                iam.ManagedPolicy.from_aws_managed_policy_name(
-                    "service-role/AWSLambdaBasicExecutionRole"
-                )
-            ],
-        )
-
-        repository = ecr.Repository.from_repository_name(
-            self, f"BackendEcrRepo{stage_name}", repository_name=repository_name
-        )
-
         lambda_env = dict(runtime_env or {})
         lambda_env["SYS_ENV"] = stage_name
         lambda_env["WEBSOCKET_URL"] = websocket_url
         lambda_env["VITE_WEBSOCKET_URL"] = websocket_url
         lambda_env["WEBSOCKET_CONNECTIONS"] = websocket_connections
+
+        configured_role_arn = lambda_env.get("ROLE_ARN", "").strip()
+        if configured_role_arn:
+            role = iam.Role.from_role_arn(
+                self,
+                f"BackendLambdaImportedRole{stage_name}",
+                role_arn=configured_role_arn,
+                mutable=False,
+            )
+        else:
+            role = iam.Role(
+                self,
+                f"BackendLambdaRole{stage_name}",
+                assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
+                managed_policies=[
+                    iam.ManagedPolicy.from_aws_managed_policy_name(
+                        "service-role/AWSLambdaBasicExecutionRole"
+                    )
+                ],
+            )
+
+        repository = ecr.Repository.from_repository_name(
+            self, f"BackendEcrRepo{stage_name}", repository_name=repository_name
+        )
 
         backend_fn = lambda_.DockerImageFunction(
             self,
