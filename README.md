@@ -12,6 +12,8 @@ Root
 │   ├── main.py                 ← Application Point of Entry
 │   ├── wsgi.py                 ← Production WSGI entry point
 │   ├── requirements.txt        ← System dependencies
+│   ├── run.sh                  ← Launch script (macOS / Linux)
+│   ├── run.cmd                 ← Launch script (Windows)
 │   └── README.md
 │
 |
@@ -114,11 +116,32 @@ git clone https://github.com/renglo/console.git
 ```
 
 Install the system dependencies
+
+**macOS / Linux**
+
 ```
 cd system
 python3.12 -m venv venv
 source venv/bin/activate
 ```
+
+**Windows** (Command Prompt)
+
+```
+cd system
+py -3.12 -m venv venv
+venv\Scripts\activate.bat
+```
+
+**Windows** (PowerShell)
+
+```
+cd system
+py -3.12 -m venv venv
+venv\Scripts\Activate.ps1
+```
+
+If `py -3.12` is not available, use the full path to Python 3.12 or `python -m venv venv` when `python` is already 3.12.
 
 Install the console dependencies
 ```
@@ -157,7 +180,10 @@ Place env_config.py in the /system folder
 Place .env.development and .env.production in the /console folder
 
 
-Copy run.sh.TEMPLATE to run.sh
+Copy `run.sh.TEMPLATE` to `run.sh` (macOS / Linux), or create `run.cmd` on Windows (see below).
+
+**macOS / Linux**
+
 ```bash
 # Copy the run script template
 cp system/run.sh.TEMPLATE system/run.sh
@@ -174,6 +200,23 @@ export AWS_PROFILE=my-profile
 export AWS_DEFAULT_REGION=us-east-1
 
 python main.py
+```
+
+**Windows**
+
+`run.sh.TEMPLATE` uses bash syntax. Create `system\run.cmd` with the same values using `set` (or copy `system\run.cmd` if your repo already includes it and edit the profile/region).
+
+```cmd
+@echo off
+set AWS_PROFILE=my-profile
+set AWS_DEFAULT_REGION=us-east-1
+python main.py
+```
+
+From the project root you can open the file in Notepad, for example:
+
+```cmd
+notepad system\run.cmd
 ```
 
 ## Running the System
@@ -270,13 +313,27 @@ Notes:
 
 
 Initialize the backEnd (system)
+
+**macOS / Linux**
+
 ```
 cd system
 source venv/bin/activate
 source run.sh
 ```
 
+**Windows** (from Command Prompt or PowerShell, with the virtual environment activated)
+
+```
+cd system
+venv\Scripts\activate
+run.cmd
+```
+
+If execution policy blocks `Activate.ps1` in PowerShell, use Command Prompt for that step, or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once (only if your organization allows it).
+
 Initialize the console (in another terminal)
+
 ```
 cd console
 npm run dev
