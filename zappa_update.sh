@@ -121,6 +121,7 @@ pip freeze --exclude-editable > "$FREEZE_FILE.tmp"
 grep -v "^-e " "$FREEZE_FILE.tmp" | \
 grep -v "\.git@" | \
 grep -v "^file://" | \
+grep -vE '^(boto3|s3transfer|botocore|python-dateutil|kappa|build|troposphere|zappa|placebo|pip|wheel)(==|===|@)' | \
 grep -E "^[a-zA-Z0-9_-]+" > "$FREEZE_FILE" || touch "$FREEZE_FILE"
 
 rm -f "$FREEZE_FILE.tmp"
