@@ -57,6 +57,7 @@ requirements.in
 
 # Config
 run.sh
+run.ps1
 env_config.py
 zappa_settings.json
 
