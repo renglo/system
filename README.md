@@ -23,3 +23,7 @@ Local config file should be created in `renglo-api` as:
 
 - `dev/renglo-api/env_config.py`
 
+## License
+
+This project is licensed under the MIT License. See [LICENSE.txt](LICENSE.txt) for details.
+
